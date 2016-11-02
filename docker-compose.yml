@@ -1,12 +1,15 @@
-infra-toolkit-slave:
-  image: avsdeveng/infra-toolkit-slave:latest
-  restart: always
-  privileged: true
-  environment:
-    SLAVE_MODE: "exclusive"
-    SLAVE_NAME: "infra"
-    SLAVE_LABELS: "infra"
-    SWARM_MASTER: "http://jenkins:8080/jenkins/"
-    NO_AUTH: "true"
-  volumes:
-    - /var/run/docker.sock:/var/run/docker.sock
+  jenkins-slave-java:
+    container_name: jenkins-slave-java
+    restart: always
+    image: avsdeveng/jenkins-slave:0.2.0
+    networks:
+      - adopnetwork
+    privileged: true
+    environment:
+      - "constraint:tier==jenkins"
+      - "SLAVE_LABELS=aws ldap java8 ansible terraform packer docker"
+      - "SLAVE_NAME=SLAVE_ANSIBLE"
+      - "SWARM_PASSWORD=${PASSWORD_JENKINS}"
+      - "SLAVE_EXECUTORS=2"
+      - "INITIAL_ADMIN_USER=${INITIAL_ADMIN_USER}"
+      - "INITIAL_ADMIN_PASSWORD=${INITIAL_ADMIN_PASSWORD_PLAIN}"
