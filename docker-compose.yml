@@ -1,0 +1,12 @@
+infra-toolkit-slave:
+  image: dockerhub.accenture.com/avsm3/jenkins-ansible-node:latest
+  restart: always
+  privileged: true
+  environment:
+    SLAVE_MODE: "exclusive"
+    SLAVE_NAME: "infra"
+    SLAVE_LABELS: "infra"
+    SWARM_MASTER: "http://jenkins"
+    NO_AUTH: "true"
+  volumes:
+    - /var/run/docker.sock:/var/run/docker.sock
