@@ -2,7 +2,7 @@ FROM centos:centos7
 MAINTAINER "Andre" <andris.jersovs@accenture.com>
 
 # Software version
-ARG TERRAFORM_VERSION="0.7.7"
+ARG TERRAFORM_VERSION="0.7.13"
 ARG PACKER_VERSION="0.11.0"
 ARG ANSIBLE_VERSION="2.2.0.0"
 ARG JAVA_VERSION=8
@@ -13,6 +13,8 @@ ARG DOCKER_ENGINE_VERSION=1.12.3-1.el7.centos
 ARG DOCKER_COMPOSE_VERSION=1.8.1
 ARG DOCKER_MACHINE_VERSION=v0.8.1
 ARG SWARM_CLIENT_VERSION="2.2"
+ARG PYPARSER_VERSION="2.13"
+ARG AZURE_VERSION="2.0.0rc5"
 
 
 # Java Env Variables
@@ -39,6 +41,10 @@ RUN yum install -y which \
     tar \
     openldap-clients \
     openssl \
+    perl \
+    gcc \
+    libffi-devel \
+    openssl-devel \
     python-pip \
     PyYAML \
     python-jinja2 \
@@ -46,10 +52,12 @@ RUN yum install -y which \
     python-keyczar \
     python-paramiko \
     python-setuptools \
+    python-devel \
+    python-simplejson \
     unzip && \
     yum clean all
 
-RUN pip install awscli==${AWS_VERSION} ansible==${ANSIBLE_VERSION}
+RUN pip install awscli==${AWS_VERSION} ansible==${ANSIBLE_VERSION} pycparser==${PYPARSER_VERSION} azure==${AZURE_VERSION} msrestazure ansible-lint behave selenium testinfra
 
 RUN curl -fsSL https://get.docker.com/ | sed "s/docker-engine/docker-engine-${DOCKER_ENGINE_VERSION}/" | sh
 
