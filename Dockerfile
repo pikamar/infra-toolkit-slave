@@ -4,7 +4,7 @@ MAINTAINER "Andre" <andris.jersovs@accenture.com>
 # Software version
 ARG TERRAFORM_VERSION="0.7.13"
 ARG PACKER_VERSION="0.11.0"
-ARG ANSIBLE_VERSION="2.2.0.0"
+ARG ANSIBLE_VERSION="2.1.2.0"
 ARG JAVA_VERSION=8
 ARG JAVA_UPDATE=65
 ARG BUILD_NUMBER=17
@@ -57,7 +57,7 @@ RUN yum install -y which \
     unzip && \
     yum clean all
 
-RUN pip install awscli==${AWS_VERSION} ansible==${ANSIBLE_VERSION} pycparser==${PYPARSER_VERSION} azure==${AZURE_VERSION} msrestazure ansible-lint behave selenium testinfra
+RUN pip install awscli==${AWS_VERSION} ansible==${ANSIBLE_VERSION} pycparser==${PYPARSER_VERSION} azure==${AZURE_VERSION} msrestazure ansible-lint behave selenium testinfra pywinrm
 
 RUN curl -fsSL https://get.docker.com/ | sed "s/docker-engine/docker-engine-${DOCKER_ENGINE_VERSION}/" | sh
 
